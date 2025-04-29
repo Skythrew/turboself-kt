@@ -28,12 +28,25 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //put your multiplatform dependencies here
+                implementation(libs.ktor.client.core)
             }
         }
+
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
+        val iosArm64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
             }
         }
     }

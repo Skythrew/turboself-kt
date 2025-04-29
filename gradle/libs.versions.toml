@@ -3,9 +3,13 @@ agp = "8.5.2"
 kotlin = "2.1.10"
 android-minSdk = "24"
 android-compileSdk = "34"
+ktor = "3.1.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 
 [plugins]
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
