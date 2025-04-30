@@ -10,6 +10,6 @@ data class TokenInfos (
     val userId: UInt,
     val roles: List<String>,
     @SerialName("hoteId") val hostId: UInt,
-    val iat: UInt,
-    val exp: UInt
+    val iat: Long,
+    val exp: Long
 )

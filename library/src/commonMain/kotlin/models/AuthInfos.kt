@@ -2,6 +2,7 @@ package models
 
 import dto.AuthResponse
 import dto.TokenInfos
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -43,9 +44,8 @@ data class AuthInfos (
 
             val accessToken = Token(
                 accessTokenRaw,
-                accessTokenInfos,
-                accessTokenInfos.iat,
-                accessTokenInfos.exp
+                Instant.fromEpochSeconds(accessTokenInfos.iat),
+                Instant.fromEpochSeconds(accessTokenInfos.exp)
             )
 
             val refreshTokenRaw = authResponse.refreshToken
@@ -58,10 +58,9 @@ data class AuthInfos (
             val refreshTokenInfos = Json.decodeFromString<TokenInfos>(refreshTokenInfosRaw)
 
             val refreshToken = Token(
-                accessTokenRaw,
-                 refreshTokenInfos,
-                accessTokenInfos.iat,
-                accessTokenInfos.exp
+                refreshTokenRaw,
+                Instant.fromEpochSeconds(refreshTokenInfos.iat),
+                Instant.fromEpochSeconds(refreshTokenInfos.exp)
             )
 
 
