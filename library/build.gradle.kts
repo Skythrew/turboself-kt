@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.vanniktech.mavenPublish)
+    alias(libs.plugins.serialization)
 }
 
 group = "io.github.skythrew"
@@ -29,12 +30,20 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(libs.ktor.client.core)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.content.negotiation)
             }
         }
 
         val commonTest by getting {
             dependencies {
                 implementation(libs.kotlin.test)
+            }
+        }
+
+        val jvmMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.cio)
             }
         }
 

@@ -1,0 +1,68 @@
+package models
+
+import dto.AuthResponse
+import dto.TokenInfos
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
+
+@Serializable
+data class AuthInfos (
+    val username: String,
+    val codes2p5: List<UInt>,
+    val userId: UInt,
+    val roles: List<String>,
+    @SerialName("hoteId") val hostId: UInt,
+    val accessToken: Token,
+    val refreshToken: Token
+) {
+    companion object {
+        @OptIn(ExperimentalEncodingApi::class)
+        fun decodeFromAuthResponse(authResponse: AuthResponse): AuthInfos {
+            val accessTokenRaw = authResponse.accessToken
+
+            val accessTokenInfosRaw = Base64
+                .withPadding(Base64.PaddingOption.ABSENT)
+                .decode(accessTokenRaw.split('.')[1])
+                .decodeToString()
+
+            val accessTokenInfos = Json.decodeFromString<TokenInfos>(accessTokenInfosRaw)
+
+            val accessToken = Token(
+                accessTokenRaw,
+                accessTokenInfos,
+                accessTokenInfos.iat,
+                accessTokenInfos.exp
+            )
+
+            val refreshTokenRaw = authResponse.refreshToken
+
+            val refreshTokenInfosRaw = Base64
+                .withPadding(Base64.PaddingOption.ABSENT)
+                .decode(refreshTokenRaw.split('.')[1])
+                .decodeToString()
+
+            val refreshTokenInfos = Json.decodeFromString<TokenInfos>(refreshTokenInfosRaw)
+
+            val refreshToken = Token(
+                accessTokenRaw,
+                 refreshTokenInfos,
+                accessTokenInfos.iat,
+                accessTokenInfos.exp
+            )
+
+
+            return AuthInfos(
+                username = accessTokenInfos.username,
+                codes2p5 = accessTokenInfos.codes2p5,
+                userId = accessTokenInfos.userId,
+                roles = accessTokenInfos.roles,
+                hostId = accessTokenInfos.hostId,
+                accessToken = accessToken,
+                refreshToken = refreshToken
+            )
+        }
+    }
+}
