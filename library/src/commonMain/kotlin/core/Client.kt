@@ -47,7 +47,7 @@ class Client {
 
         this.authInfos = authInfos
 
-        return authInfos;
+        return authInfos
     }
 
     /**
