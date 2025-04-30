@@ -8,6 +8,17 @@ import kotlinx.serialization.json.Json
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
+/**
+ * Authentication informations
+ *
+ * @property username Account username
+ * @property codes2p5 Establishment(s) codes
+ * @property userId Account ID
+ * @property roles Account roles
+ * @property hostId Host ID, don't know what it is for exactly
+ * @property accessToken Authorization token
+ * @property refreshToken Authorization refresh token
+ */
 @Serializable
 data class AuthInfos (
     val username: String,
