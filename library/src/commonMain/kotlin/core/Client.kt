@@ -2,15 +2,22 @@ package core
 
 import dto.AuthOptions
 import dto.AuthResponse
+import dto.RawBalance
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import models.AuthInfos
+import models.Balance
 
 /**
  * Turboself Client
  */
 class Client {
+    private var authInfos: AuthInfos? = null
     private val apiManager = ApiManager()
+
+    private fun getHostUrl(url: String): String {
+        return url.replace(":hostId:", this.authInfos!!.hostId.toString())
+    }
 
     /**
      * Log in with simple credentials.
@@ -36,6 +43,19 @@ class Client {
 
         this.apiManager.setAuthToken(authResponse.accessToken)
 
-        return AuthInfos.decodeFromAuthResponse(authResponse)
+        val authInfos = AuthInfos.decodeFromAuthResponse(authResponse)
+
+        this.authInfos = authInfos
+
+        return authInfos;
+    }
+
+    /**
+     * Get the available account balances.
+     */
+    suspend fun balances(): List<Balance> {
+        val rawBalances = this.apiManager.getObj<List<RawBalance>>(getHostUrl(HOST_BALANCES))
+
+        return rawBalances.map { rawBalance -> Balance.decodeFromRawBalance(rawBalance) }
     }
 }
