@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
  * Account balance
  *
  * @property id Balance id
- * @property label Balance label
  * @property amount Balance amount (can be negative ?)
+ * @property estimatedAmountLabel Estimated balance label
  * @property estimatedAmount Estimated amount taking into account user bookings
  * @property estimatedDate Estimated balance date
  */
@@ -24,7 +24,7 @@ data class Balance(
     companion object {
         fun decodeFromRawBalance(rawBalance: RawBalance): Balance {
             val regex = """.*(\d{2})/(\d{2})/(\d{4})""".toRegex()
-            val (whole, day, month, year) =  regex.matchEntire(rawBalance.montantEstimeMsg)!!.groupValues
+            val (_, day, month, year) =  regex.matchEntire(rawBalance.montantEstimeMsg)!!.groupValues
 
             val date = Instant.parse("$year-$month-${day}T00:00:00Z")
 
