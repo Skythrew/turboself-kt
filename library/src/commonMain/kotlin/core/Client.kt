@@ -3,10 +3,12 @@ package core
 import dto.AuthOptions
 import dto.AuthResponse
 import dto.RawBalance
+import dto.RawHome
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import models.AuthInfos
 import models.Balance
+import models.Payment
 
 /**
  * Turboself Client
@@ -57,5 +59,17 @@ class Client {
         val rawBalances = this.apiManager.getObj<List<RawBalance>>(getHostUrl(HOST_BALANCES))
 
         return rawBalances.map { rawBalance -> Balance.decodeFromRawBalance(rawBalance) }
+    }
+
+    /**
+     * Get the latest payment.
+     */
+    suspend fun latestPayment(): Payment? {
+        val rawHome = this.apiManager.getObj<RawHome>(getHostUrl(HOST_HOME))
+
+        if (rawHome.latestPaiement == null)
+            return null
+
+        return Payment.decodeFromRawPayment(this.authInfos!!.hostId, rawHome.latestPaiement)
     }
 }
