@@ -3,11 +3,13 @@ package core
 import dto.AuthOptions
 import dto.AuthResponse
 import dto.RawBalance
+import dto.RawHistoryEvent
 import dto.RawHome
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import models.AuthInfos
 import models.Balance
+import models.HistoryEvent
 import models.Payment
 
 /**
@@ -71,5 +73,14 @@ class Client {
             return null
 
         return Payment.decodeFromRawPayment(this.authInfos!!.hostId, rawHome.latestPaiement)
+    }
+
+    /**
+     * Get the account history.
+     */
+    suspend fun history(): List<HistoryEvent> {
+        val rawHistory = this.apiManager.getObj<List<RawHistoryEvent>>(getHostUrl(HOST_HISTORY))
+
+        return HistoryEvent.decodeRawHistory(rawHistory)
     }
 }

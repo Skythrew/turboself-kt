@@ -2,6 +2,7 @@ package models
 
 import dto.RawPayment
 import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 
 /**
  * A Turboself payment.
@@ -16,6 +17,7 @@ import kotlinx.datetime.Instant
  * @property returnUrl URL to redirect to if the payment is successful
  * @property date Payment date
  */
+@Serializable
 data class Payment(
     val id: UInt?,
     val hostId: UInt,
