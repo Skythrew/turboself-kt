@@ -8,12 +8,14 @@ import dto.RawHistoryEvent
 import dto.RawHome
 import dto.RawPayment
 import io.ktor.client.statement.bodyAsText
+import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import models.AuthInfos
 import models.Balance
 import models.Establishment
 import models.HistoryEvent
 import models.Payment
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * Turboself Client
@@ -50,11 +52,27 @@ class Client {
 
         this.apiManager.setAuthToken(authResponse.accessToken)
 
-        val authInfos = AuthInfos.decodeFromAuthResponse(authResponse)
+        val authInfos = AuthInfos.decodeFromAuthResponse(authResponse, password)
 
         this.authInfos = authInfos
 
         return authInfos
+    }
+
+    /**
+     * Refresh authentication token
+     *
+     * Useful when storing a single client in an app storage
+     * and using it multiple times.
+     */
+    suspend fun refreshToken() {
+        if (this.authInfos == null)
+            error("You haven't logged in a single time yet.")
+
+        if (this.authInfos!!.accessToken.expirationDate < Clock.System.now() - 15.minutes)
+            return
+
+        this.loginWithCredentials(this.authInfos!!.username, this.authInfos!!.password)
     }
 
     /**

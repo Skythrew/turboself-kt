@@ -23,6 +23,7 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 @Serializable
 data class AuthInfos (
     val username: String,
+    val password: String,
     val codes2p5: List<UInt>,
     val userId: UInt,
     val roles: List<String>,
@@ -32,7 +33,7 @@ data class AuthInfos (
 ) {
     companion object {
         @OptIn(ExperimentalEncodingApi::class)
-        fun decodeFromAuthResponse(authResponse: AuthResponse): AuthInfos {
+        fun decodeFromAuthResponse(authResponse: AuthResponse, password: String): AuthInfos {
             val accessTokenRaw = authResponse.accessToken
 
             val accessTokenInfosRaw = Base64
@@ -66,6 +67,7 @@ data class AuthInfos (
 
             return AuthInfos(
                 username = accessTokenInfos.username,
+                password = password,
                 codes2p5 = accessTokenInfos.codes2p5,
                 userId = accessTokenInfos.userId,
                 roles = accessTokenInfos.roles,
