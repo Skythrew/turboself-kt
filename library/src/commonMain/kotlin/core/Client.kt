@@ -3,6 +3,7 @@ package core
 import dto.AuthOptions
 import dto.AuthResponse
 import dto.RawBalance
+import dto.RawEstablishment
 import dto.RawHistoryEvent
 import dto.RawHome
 import dto.RawPayment
@@ -10,6 +11,7 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import models.AuthInfos
 import models.Balance
+import models.Establishment
 import models.HistoryEvent
 import models.Payment
 
@@ -92,5 +94,37 @@ class Client {
         val rawHistory = this.apiManager.getObj<List<RawHistoryEvent>>(getHostUrl(HOST_HISTORY))
 
         return HistoryEvent.decodeRawHistory(rawHistory)
+    }
+
+    /**
+     * Get a specific establishment by ID.
+     *
+     * Provides a more complete information than getting information by 2p5.
+     */
+    suspend fun establishmentByID(id: Int): Establishment {
+        return Establishment
+            .decodeFromRawEstablishment(
+this
+                    .apiManager
+                    .getObj<RawEstablishment>(
+                        ESTABLISHMENT_BY_ID + id.toString()
+                    )
+            )
+    }
+
+    /**
+     * Get a specific establishment by 2p5 code.
+     *
+     * Only provides establishment name and Turboself version.
+     */
+    suspend fun establishmentBy2P5(code: Int): Establishment {
+        return Establishment
+            .decodeFromRawEstablishment(
+                this
+                    .apiManager
+                    .getObj<List<RawEstablishment>>(
+                        ESTABLISHMENT_BY_CODE + code
+                    )[0]
+            )
     }
 }
