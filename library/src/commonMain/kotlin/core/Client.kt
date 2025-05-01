@@ -5,6 +5,7 @@ import dto.AuthResponse
 import dto.RawBalance
 import dto.RawHistoryEvent
 import dto.RawHome
+import dto.RawPayment
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 import models.AuthInfos
@@ -61,6 +62,15 @@ class Client {
         val rawBalances = this.apiManager.getObj<List<RawBalance>>(getHostUrl(HOST_BALANCES))
 
         return rawBalances.map { rawBalance -> Balance.decodeFromRawBalance(rawBalance) }
+    }
+
+    /**
+     * Get a specific Turboself payment.
+     */
+    suspend fun payment(paymentToken: String): Payment {
+        val rawPayment = this.apiManager.getObj<RawPayment>(getHostUrl(HOST_PAYMENT) + "/$paymentToken")
+
+        return Payment.decodeFromRawPayment(this.authInfos!!.hostId, rawPayment)
     }
 
     /**
