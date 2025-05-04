@@ -14,7 +14,7 @@ data class RawHost(
     val division: String,
     val prixDej: Int,
     val type: Short,
-    val nbMulti: Int,
+    val nbMulti: Int? = null,
     val droitPaiement: Boolean? = null,
     val droitReservation: Boolean? = null,
     val droitCafeteria: Boolean? = null,

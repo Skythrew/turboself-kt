@@ -3,6 +3,29 @@ package dto
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class RawBookWeb(
+    val id: String,
+    val annee: Int,
+    val semaine: Int,
+    val borneId: Int,
+    val joursAutorises: Int,
+    val usage: Int,
+    val hote: RawHost
+)
+
+@Serializable
+data class RawBookResult(
+    val dayReserv: Int,
+    val reservHorsKiosk: Int,
+    val reservDernSynchro: Int,
+    val web: RawBookWeb,
+    val rsvwebid: String,
+    val dayOfWeek: Int,
+    val msg: String? = null,
+    val id: String
+)
+
+@Serializable
 data class RawBookingDay(
     val dayReserv: Int,
     val reservDernSynchro: Int,

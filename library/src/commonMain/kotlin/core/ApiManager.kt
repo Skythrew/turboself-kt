@@ -65,6 +65,10 @@ class ApiManager {
         return this.request(url, HttpMethod.Post, httpBody = body)
     }
 
+    suspend inline fun <reified T> postObj(url: String, body: Any): T {
+        return this.jsonDecoder.decodeFromString<T>(this.post(url, body).bodyAsText())
+    }
+
     fun setAuthToken(token: String) {
         this.bearer = token
     }

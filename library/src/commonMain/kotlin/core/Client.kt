@@ -3,6 +3,7 @@ package core
 import dto.AuthOptions
 import dto.AuthResponse
 import dto.RawBalance
+import dto.RawBookResult
 import dto.RawBookingsResult
 import dto.RawEstablishment
 import dto.RawHistoryEvent
@@ -12,9 +13,13 @@ import dto.RawPayment
 import io.ktor.client.statement.bodyAsText
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import kotlinx.serialization.json.putJsonObject
 import models.AuthInfos
 import models.Balance
 import models.Booking
+import models.BookingDay
 import models.Establishment
 import models.HistoryEvent
 import models.Host
@@ -183,5 +188,25 @@ this
             error("No booking was found for this week.")
 
         return rawBookingResult.rsvWebDto.map { rawBooking -> Booking.decodeFromRawBooking(rawBooking) }
+    }
+
+    suspend fun bookMeal(bookingId: String, day: Short, reservations: Short = 1, bookEvening: Boolean = false): BookingDay {
+        val rawBook = this.apiManager.postObj<RawBookResult>(getHostUrl(HOST_BOOK_MEAL), buildJsonObject {
+            put("dayOfWeek", day)
+            put("dayReserv", reservations)
+            putJsonObject("web") {
+                put("id", bookingId)
+            }
+            put("hasHoteResaSoirActive", bookEvening)
+        }.toString())
+
+        return BookingDay(
+            rawBook.dayReserv > 0,
+            true,
+            rawBook.dayOfWeek,
+            rawBook.msg ?: "",
+            rawBook.dayReserv,
+            Clock.System.now()
+        )
     }
 }
