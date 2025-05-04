@@ -6,6 +6,7 @@ import dto.RawBalance
 import dto.RawEstablishment
 import dto.RawHistoryEvent
 import dto.RawHome
+import dto.RawHost
 import dto.RawPayment
 import io.ktor.client.statement.bodyAsText
 import kotlinx.datetime.Clock
@@ -14,6 +15,7 @@ import models.AuthInfos
 import models.Balance
 import models.Establishment
 import models.HistoryEvent
+import models.Host
 import models.Payment
 import kotlin.time.Duration.Companion.minutes
 
@@ -143,6 +145,17 @@ this
                     .getObj<List<RawEstablishment>>(
                         ESTABLISHMENT_BY_CODE + code
                     )[0]
+            )
+    }
+
+    /**
+     * Get host information.
+     */
+    suspend fun host(): Host {
+        return Host
+            .decodeFromRawHost(
+                this.apiManager.getObj<RawHost>(getHostUrl(HOST)
+                )
             )
     }
 }
