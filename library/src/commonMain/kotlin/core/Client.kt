@@ -158,4 +158,13 @@ this
                 )
             )
     }
+
+    /**
+     * Get host siblings.
+     */
+    suspend fun siblings(): List<Host> {
+        return this.apiManager.getObj<List<RawHost>>(getHostUrl(HOST_SIBLINGS)).map {
+            rawHost -> Host.decodeFromRawHost(rawHost)
+        }
+    }
 }
