@@ -95,6 +95,8 @@ class Client {
 
     /**
      * Get a specific Turboself payment.
+     *
+     * @param paymentToken Payment token
      */
     suspend fun payment(paymentToken: String): Payment {
         val rawPayment = this.apiManager.getObj<RawPayment>(getHostUrl(HOST_PAYMENT) + "/$paymentToken")
@@ -127,6 +129,8 @@ class Client {
      * Get a specific establishment by ID.
      *
      * Provides a more complete information than getting information by 2p5.
+     *
+     * @param id Establishment ID
      */
     suspend fun establishmentByID(id: Int): Establishment {
         return Establishment
@@ -143,6 +147,8 @@ this
      * Get a specific establishment by 2p5 code.
      *
      * Only provides establishment name and Turboself version.
+     *
+     * @param code Establishment code
      */
     suspend fun establishmentBy2P5(code: Int): Establishment {
         return Establishment
@@ -178,6 +184,8 @@ this
     /**
      * Get bookings for the specified week (or the current week if no
      * week is provided)
+     *
+     * @param week Week number
      */
     suspend fun bookings(week: Int? = null): List<Booking> {
         val rawBookingResult = this.apiManager.getObj<RawBookingsResult>(
@@ -190,6 +198,14 @@ this
         return rawBookingResult.rsvWebDto.map { rawBooking -> Booking.decodeFromRawBooking(rawBooking) }
     }
 
+    /**
+     * Book a meal on a given date.
+     *
+     * @param bookingId Booking id (usually there's one booking per week and per terminal)
+     * @param day Day of week to book (1-7)
+     * @param reservations Number of reservations to book
+     * @param bookEvening Should we book for the evening ?
+     */
     suspend fun bookMeal(bookingId: String, day: Short, reservations: Short = 1, bookEvening: Boolean = false): BookingDay {
         val rawBook = this.apiManager.postObj<RawBookResult>(getHostUrl(HOST_BOOK_MEAL), buildJsonObject {
             put("dayOfWeek", day)
