@@ -3,6 +3,7 @@ package core
 import dto.AuthOptions
 import dto.AuthResponse
 import dto.RawBalance
+import dto.RawBookingsResult
 import dto.RawEstablishment
 import dto.RawHistoryEvent
 import dto.RawHome
@@ -13,6 +14,7 @@ import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
 import models.AuthInfos
 import models.Balance
+import models.Booking
 import models.Establishment
 import models.HistoryEvent
 import models.Host
@@ -166,5 +168,20 @@ this
         return this.apiManager.getObj<List<RawHost>>(getHostUrl(HOST_SIBLINGS)).map {
             rawHost -> Host.decodeFromRawHost(rawHost)
         }
+    }
+
+    /**
+     * Get bookings for the specified week (or the current week if no
+     * week is provided)
+     */
+    suspend fun bookings(week: Int? = null): List<Booking> {
+        val rawBookingResult = this.apiManager.getObj<RawBookingsResult>(
+            getHostUrl(HOST_BOOKINGS) + (week?.toString() ?: "")
+        )
+
+        if (rawBookingResult.rsvWebDto.isEmpty())
+            error("No booking was found for this week.")
+
+        return rawBookingResult.rsvWebDto.map { rawBooking -> Booking.decodeFromRawBooking(rawBooking) }
     }
 }
