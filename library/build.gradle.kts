@@ -75,43 +75,35 @@ android {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-
-        }
-    }
-}
-/* mavenPublishing {
-    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-
-    signAllPublications()
-
-    coordinates(group.toString(), "library", version.toString())
+mavenPublishing {
+    coordinates("io.github.skythrew", "turboselfkt", "1.0.0")
 
     pom {
-        name = "My library"
-        description = "A library."
-        inceptionYear = "2024"
-        url = "https://github.com/kotlin/multiplatform-library-template/"
+        name.set("TurboselfKT")
+        description.set("A simple Kotlin wrapper around Turboself internal API.")
+        inceptionYear.set("2025")
+        url.set("https://github.com/Skythrew/turboself-kt/")
         licenses {
             license {
-                name = "XXX"
-                url = "YYY"
-                distribution = "ZZZ"
+                name.set("GPL-3.0-or-later")
+                url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
+                distribution.set("https://www.gnu.org/licenses/gpl-3.0.txt")
             }
         }
         developers {
             developer {
-                id = "XXX"
-                name = "YYY"
-                url = "ZZZ"
+                name.set("Maël GUERIN")
+                url.set("https://github.com/Skythrew/")
             }
         }
         scm {
-            url = "XXX"
-            connection = "YYY"
-            developerConnection = "ZZZ"
+            url.set("https://github.com/Skythrew/turboself-kt/")
+            connection.set("scm:git:git://github.com/Skythrew/turboself-kt.git")
+            developerConnection.set("scm:git:ssh://git@github.com/Skythrew/turboself-kt.git")
         }
     }
-} */
+
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+
+    signAllPublications()
+}
