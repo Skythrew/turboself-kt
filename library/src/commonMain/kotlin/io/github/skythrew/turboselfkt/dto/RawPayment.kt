@@ -1,4 +1,4 @@
-package dto
+package io.github.skythrew.turboselfkt.dto
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable

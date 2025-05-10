@@ -1,4 +1,4 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable

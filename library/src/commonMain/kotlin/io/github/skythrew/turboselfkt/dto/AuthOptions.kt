@@ -1,4 +1,4 @@
-package dto
+package io.github.skythrew.turboselfkt.dto
 
 import kotlinx.serialization.Serializable
 

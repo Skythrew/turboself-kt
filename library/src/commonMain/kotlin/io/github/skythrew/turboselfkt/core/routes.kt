@@ -1,4 +1,4 @@
-package core
+package io.github.skythrew.turboselfkt.core
 
 const val BASE_URL = "https://api-rest-prod.incb.fr/api"
 

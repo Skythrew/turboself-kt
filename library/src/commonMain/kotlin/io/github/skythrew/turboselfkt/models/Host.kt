@@ -1,6 +1,6 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawHost
+import io.github.skythrew.turboselfkt.dto.RawHost
 import kotlinx.serialization.Serializable
 
 @Serializable

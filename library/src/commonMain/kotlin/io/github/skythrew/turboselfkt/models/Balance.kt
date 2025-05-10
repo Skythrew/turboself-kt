@@ -1,6 +1,6 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawBalance
+import io.github.skythrew.turboselfkt.dto.RawBalance
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 

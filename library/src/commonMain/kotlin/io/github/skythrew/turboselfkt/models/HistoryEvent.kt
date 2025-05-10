@@ -1,6 +1,6 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawHistoryEvent
+import io.github.skythrew.turboselfkt.dto.RawHistoryEvent
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 

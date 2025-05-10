@@ -1,7 +1,7 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawBooking
-import dto.RawBookingDay
+import io.github.skythrew.turboselfkt.dto.RawBooking
+import io.github.skythrew.turboselfkt.dto.RawBookingDay
 import getWeekRange
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone

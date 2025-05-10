@@ -1,7 +1,7 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.AuthResponse
-import dto.TokenInfos
+import io.github.skythrew.turboselfkt.dto.AuthResponse
+import io.github.skythrew.turboselfkt.dto.TokenInfos
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

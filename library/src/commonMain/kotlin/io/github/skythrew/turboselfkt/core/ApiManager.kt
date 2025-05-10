@@ -1,6 +1,6 @@
-package core
+package io.github.skythrew.turboselfkt.core
 
-import dto.ErrorResponse
+import io.github.skythrew.turboselfkt.dto.ErrorResponse
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.bearerAuth

@@ -1,6 +1,6 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawPayment
+import io.github.skythrew.turboselfkt.dto.RawPayment
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 

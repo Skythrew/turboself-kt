@@ -1,7 +1,7 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawTerminal
-import dto.RawTerminalPrice
+import io.github.skythrew.turboselfkt.dto.RawTerminal
+import io.github.skythrew.turboselfkt.dto.RawTerminalPrice
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,7 +1,7 @@
-package models
+package io.github.skythrew.turboselfkt.models
 
-import dto.RawEstablishment
-import dto.RawSSOConfiguration
+import io.github.skythrew.turboselfkt.dto.RawEstablishment
+import io.github.skythrew.turboselfkt.dto.RawSSOConfiguration
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
