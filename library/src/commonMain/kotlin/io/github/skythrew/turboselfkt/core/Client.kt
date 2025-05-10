@@ -29,7 +29,7 @@ import kotlin.time.Duration.Companion.minutes
 /**
  * Turboself Client
  */
-class Client {
+class TurboselfClient {
     private var authInfos: AuthInfos? = null
     private val apiManager = ApiManager()
 
