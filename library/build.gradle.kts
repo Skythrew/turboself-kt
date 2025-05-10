@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "io.github.skythrew"
-version = "1.0.0"
+version = "1.0.1"
 
 kotlin {
     jvm()
@@ -76,7 +76,7 @@ android {
 }
 
 mavenPublishing {
-    coordinates("io.github.skythrew", "turboselfkt", "1.0.0")
+    coordinates("io.github.skythrew", "turboselfkt", version as String?)
 
     pom {
         name.set("TurboselfKT")
